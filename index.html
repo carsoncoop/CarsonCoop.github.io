@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Carson Coop</title>
-<meta name="description" content="Music, audio, and code by Carson Coop.">
+<meta name="description" content="Carson Coop: UF Computer Science student working on audio programming, DSP, AI, sound design, and music.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;800&display=swap" rel="stylesheet">
@@ -94,11 +94,23 @@
     letter-spacing: -0.04em;
     margin: 0 0 clamp(20px, 3vw, 32px);
   }
-  .bio {
-    font-size: clamp(1.125rem, 2vw, 1.5rem);
-    color: var(--muted);
-    max-width: 36ch;
-    margin: 0 0 clamp(32px, 5vw, 56px);
+  .facts {
+    display: grid;
+    gap: 10px;
+    margin: 0;
+    max-width: 52ch;
+    font-size: clamp(1.0625rem, 1.7vw, 1.3125rem);
+    line-height: 1.4;
+  }
+  .facts div {
+    display: grid;
+    grid-template-columns: 8.5em minmax(0, 1fr);
+    gap: 4px 16px;
+  }
+  .facts dt { color: var(--muted); }
+  .facts dd { margin: 0; font-weight: 500; }
+  @media (max-width: 520px) {
+    .facts div { grid-template-columns: 1fr; }
   }
   /* Headshot */
   .hero-top {
@@ -109,7 +121,6 @@
     margin-bottom: clamp(32px, 5vw, 56px);
   }
   .hero-top h1 { margin-bottom: clamp(16px, 2.5vw, 28px); }
-  .hero-top .bio { margin-bottom: 0; }
   .headshot {
     position: relative;
     width: clamp(200px, 26vw, 320px);
@@ -340,7 +351,11 @@
       <div class="hero-top">
         <div>
           <h1>Carson Coop</h1>
-          <p class="bio">I make music, work with audio, and write code. Everything I'm working on lives in the sections below.</p>
+          <dl class="facts">
+            <div><dt>Area of study:</dt><dd>Computer Science, Statistics minor (University of Florida)</dd></div>
+            <div><dt>Graduation:</dt><dd>December 2027</dd></div>
+            <div><dt>Interests:</dt><dd>DSP, audio programming, AI, sound design</dd></div>
+          </dl>
         </div>
         <!-- Headshot: save your photo as headshot.jpg next to this file (portrait, about 800x1000). Until then the initials show. -->
         <figure class="headshot">
@@ -398,16 +413,27 @@
       <h2 id="sound-h">Sound design</h2>
       <!-- Replace YOUR_VIDEO_ID_1 and YOUR_VIDEO_ID_2 with the part after "v=" in each YouTube link. -->
       <div class="grid">
-        <div class="card">
-          <div class="video">
-            <iframe src="https://www.youtube.com/embed/YOUR_VIDEO_ID_1" title="Sound design video 1" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        <article class="card">
+          <div class="card-head">
+            <h3 class="card-title">Valorant gun sound redesign</h3>
           </div>
-        </div>
-        <div class="card">
+          <p class="desc">Gun sounds designed to replace Valorant's, edited into gameplay recordings in post.</p>
+          <ul class="tags" aria-label="Type of work"><li>Sound design</li><li>Edited in post</li></ul>
           <div class="video">
-            <iframe src="https://www.youtube.com/embed/YOUR_VIDEO_ID_2" title="Sound design video 2" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            <iframe src="https://www.youtube.com/embed/YOUR_VIDEO_ID_1" title="Valorant gun sound redesign video" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
           </div>
-        </div>
+        </article>
+
+        <article class="card">
+          <div class="card-head">
+            <h3 class="card-title">Real-time game audio</h3>
+          </div>
+          <p class="desc">Audio implemented in a game in real time.</p>
+          <ul class="tags" aria-label="Type of work"><li>Sound design</li><li>Real-time implementation</li></ul>
+          <div class="video">
+            <iframe src="https://www.youtube.com/embed/YOUR_VIDEO_ID_2" title="Real-time game audio demo video" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          </div>
+        </article>
       </div>
     </div>
   </section>
