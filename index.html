@@ -47,6 +47,19 @@
     letter-spacing: -0.03em;
     margin: 0 0 20px;
   }
+  .top-links {
+    display: flex;
+    gap: 20px;
+    margin: 0 0 20px;
+  }
+  .top-links a {
+    color: var(--muted);
+    text-decoration: none;
+    font-weight: 500;
+  }
+  .top-links a:hover,
+  .top-links a:focus-visible { color: var(--accent); }
+  .top-links a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
   .bio {
     font-size: 1.125rem;
     color: var(--muted);
@@ -119,10 +132,54 @@
     max-width: 52ch;
   }
   .panel p { margin: 0; }
+  .panel p + p { margin-top: 8px; }
+  .panel a {
+    color: var(--accent);
+    font-weight: 500;
+    text-underline-offset: 3px;
+  }
+  .panel a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .panel h3 {
+    margin: 24px 0 8px;
+    font-family: "Bricolage Grotesque", system-ui, sans-serif;
+    font-weight: 500;
+    font-size: 1.125rem;
+    color: var(--ink);
+  }
+  .tracks { display: grid; gap: 12px; }
+  .sc {
+    display: block;
+    width: 100%;
+    height: 166px;
+    border: 0;
+    border-radius: 6px;
+    background: var(--line);
+  }
+  .panel-wide { max-width: none; }
+  .video {
+    position: relative;
+    aspect-ratio: 16 / 9;
+    border-radius: 6px;
+    overflow: hidden;
+    background: var(--line);
+  }
+  .video + .video { margin-top: 16px; }
+  .video iframe {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
 </style>
 </head>
 <body>
 <main>
+  <nav class="top-links" aria-label="Profiles">
+    <a href="https://github.com/carsoncoop">GitHub</a>
+    <a href="https://www.linkedin.com/in/carson-coop/">LinkedIn</a>
+  </nav>
+
   <h1>Carson Coop</h1>
   <p class="bio">I make music, work with audio, and write code. Everything I'm working on lives in the sections below.</p>
 
@@ -134,21 +191,42 @@
     <details>
       <summary>Coding projects</summary>
       <div class="panel">
+        <p><a href="https://github.com/carsoncoop/EasyClip">EasyClip</a></p>
         <p>More info coming soon.</p>
       </div>
     </details>
 
     <details>
       <summary>Sound design</summary>
-      <div class="panel">
-        <p>More info coming soon.</p>
+      <div class="panel panel-wide">
+        <!-- Replace YOUR_VIDEO_ID_1 and YOUR_VIDEO_ID_2 with the part after "v=" in each YouTube link. -->
+        <div class="video">
+          <iframe src="https://www.youtube.com/embed/YOUR_VIDEO_ID_1" title="Sound design video 1" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+        <div class="video">
+          <iframe src="https://www.youtube.com/embed/YOUR_VIDEO_ID_2" title="Sound design video 2" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
       </div>
     </details>
 
     <details>
       <summary>Music project</summary>
-      <div class="panel">
-        <p>More info coming soon.</p>
+      <div class="panel panel-wide">
+        <p><a href="https://soundcloud.com/gorkaton">GORKATON</a></p>
+        <p>GORKATON is my electronic dance music project. I produce every track from scratch, from the first sound to the final mix.</p>
+
+        <h3>Original songs</h3>
+        <div class="tracks">
+          <iframe class="sc" title="Otherworld" loading="lazy" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/gorkaton/otherworld-1&color=%233b3bf2&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false&visual=false"></iframe>
+          <iframe class="sc" title="Bass Don't Stop" loading="lazy" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/gorkaton/bass-dont-stop&color=%233b3bf2&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false&visual=false"></iframe>
+          <iframe class="sc" title="2 The Back" loading="lazy" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/gorkaton/2-the-back&color=%233b3bf2&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false&visual=false"></iframe>
+        </div>
+
+        <h3>Remixes</h3>
+        <div class="tracks">
+          <iframe class="sc" title="Ninajirachi - Battery Death (GORKATON remix)" loading="lazy" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/gorkaton/ninajirachi-battery-death&color=%233b3bf2&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false&visual=false"></iframe>
+          <iframe class="sc" title="Earth, Wind &amp; Fire - Let's Groove (GORKATON remix)" loading="lazy" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/gorkaton/earth-wind-fire-lets-groove&color=%233b3bf2&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false&visual=false"></iframe>
+        </div>
       </div>
     </details>
   </div>
