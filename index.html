@@ -158,6 +158,34 @@
   .panel-wide { max-width: none; }
   .panel .desc { max-width: 56ch; margin-bottom: 16px; }
   .panel p.next-project { margin-top: 40px; }
+  .proj-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 16px;
+    margin: 0;
+  }
+  .panel p.next-project.proj-head { margin-top: 40px; }
+  .proj-title { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+  .date {
+    flex: none;
+    font-size: 0.875rem;
+    color: var(--muted);
+    font-variant-numeric: tabular-nums;
+  }
+  .wip {
+    display: inline-block;
+    padding: 2px 8px;
+    border: 1.5px solid var(--accent);
+    border-radius: 999px;
+    color: var(--accent);
+    font-size: 0.6875rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    line-height: 1.4;
+  }
+  .track .date { display: block; margin: 0 0 4px 2px; }
   .video {
     position: relative;
     aspect-ratio: 16 / 9;
@@ -193,17 +221,21 @@
     <details>
       <summary>Coding projects</summary>
       <div class="panel panel-wide">
-        <p><a href="https://github.com/carsoncoop/EasyClip">EasyClip</a></p>
+        <p class="proj-head"><span class="proj-title"><a href="https://github.com/carsoncoop/DynaFAT">DynaFAT</a><span class="wip">Work in progress</span></span><span class="date">Jun 2026 – Present</span></p>
+        <p class="desc">A real-time audio processing VST plugin for electronic music production. It keeps the dynamics of bass synths while adding richness through aggressive distortion, multiband compression, and envelope following. Built with C++ and the JUCE framework.</p>
+        <div class="video">
+          <iframe src="https://www.youtube.com/embed/gI5iUk-rYCE" title="DynaFAT demo video" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+
+
+        <p class="next-project proj-head"><span class="proj-title"><a href="https://github.com/carsoncoop/EasyClip">EasyClip</a></span><span class="date">Apr 2026 – Jun 2026</span></p>
         <p class="desc">A real-time audio distortion plugin for electronic music production. It has four clipping algorithms (soft clip, hard clip, foldback, and downsample) for shaping your sound and adding harmonic character, plus drive, threshold, mix, and output controls and a live waveform display. Built with C++ and the JUCE framework.</p>
         <div class="video">
           <iframe src="https://www.youtube.com/embed/7pT0tFm85ME" title="EasyClip preview video" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
         </div>
 
-        <p class="next-project"><a href="https://github.com/carsoncoop/DynaFAT">DynaFAT</a></p>
-        <p class="desc">A real-time audio processing VST plugin for electronic music production. It keeps the dynamics of bass synths while adding richness through aggressive distortion, multiband compression, and envelope following. Built with C++ and the JUCE framework.</p>
-        <div class="video">
-          <iframe src="https://www.youtube.com/embed/gI5iUk-rYCE" title="DynaFAT demo video" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-        </div>
+        <p class="next-project proj-head"><span class="proj-title"><a href="https://github.com/carsoncoop/Phishing-Detector-Project">Phishing Detector</a></span><span class="date">Dec 2025 – Feb 2026</span></p>
+        <p class="desc">A Chrome extension that detects phishing emails using a scikit-learn machine learning model served by a Flask backend. It ties together a browser frontend, a Python API, and a trained classifier into one full-stack project.</p>
       </div>
     </details>
 
@@ -228,15 +260,15 @@
 
         <h3>Original songs</h3>
         <div class="tracks">
-          <iframe class="sc" title="Otherworld" loading="lazy" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/gorkaton/otherworld-1&color=%233b3bf2&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false&visual=false"></iframe>
-          <iframe class="sc" title="Bass Don't Stop" loading="lazy" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/gorkaton/bass-dont-stop&color=%233b3bf2&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false&visual=false"></iframe>
-          <iframe class="sc" title="2 The Back" loading="lazy" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/gorkaton/2-the-back&color=%233b3bf2&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false&visual=false"></iframe>
+          <div class="track"><time class="date" datetime="2026-06-30">Jun 2026</time><iframe class="sc" title="Otherworld" loading="lazy" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/gorkaton/otherworld-1&color=%233b3bf2&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false&visual=false"></iframe></div>
+          <div class="track"><time class="date" datetime="2026-06-08">Jun 2026</time><iframe class="sc" title="Bass Don't Stop" loading="lazy" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/gorkaton/bass-dont-stop&color=%233b3bf2&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false&visual=false"></iframe></div>
+          <div class="track"><time class="date" datetime="2025-10-16">Oct 2025</time><iframe class="sc" title="2 The Back" loading="lazy" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/gorkaton/2-the-back&color=%233b3bf2&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false&visual=false"></iframe></div>
         </div>
 
         <h3>Remixes</h3>
         <div class="tracks">
-          <iframe class="sc" title="Ninajirachi - Battery Death (GORKATON remix)" loading="lazy" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/gorkaton/ninajirachi-battery-death&color=%233b3bf2&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false&visual=false"></iframe>
-          <iframe class="sc" title="Earth, Wind &amp; Fire - Let's Groove (GORKATON remix)" loading="lazy" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/gorkaton/earth-wind-fire-lets-groove&color=%233b3bf2&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false&visual=false"></iframe>
+          <div class="track"><time class="date" datetime="2026-05-03">May 2026</time><iframe class="sc" title="Ninajirachi - Battery Death (GORKATON remix)" loading="lazy" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/gorkaton/ninajirachi-battery-death&color=%233b3bf2&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false&visual=false"></iframe></div>
+          <div class="track"><time class="date" datetime="2026-04-29">Apr 2026</time><iframe class="sc" title="Earth, Wind &amp; Fire - Let's Groove (GORKATON remix)" loading="lazy" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/gorkaton/earth-wind-fire-lets-groove&color=%233b3bf2&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false&visual=false"></iframe></div>
         </div>
       </div>
     </details>
