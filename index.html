@@ -73,46 +73,85 @@
   @media (prefers-reduced-motion: reduce) {
     .wave span { animation: none; }
   }
-  ul { list-style: none; margin: 0; padding: 0; }
-  li + li { margin-top: 0; }
-  a.link {
+
+  /* Dropdown sections */
+  .sections details {
+    border-top: 1px solid var(--line);
+  }
+  .sections details:last-child {
+    border-bottom: 1px solid var(--line);
+  }
+  .sections summary {
     display: flex;
     justify-content: space-between;
-    align-items: baseline;
+    align-items: center;
     gap: 16px;
     padding: 20px 4px;
-    border-top: 1px solid var(--line);
-    color: var(--ink);
-    text-decoration: none;
+    cursor: pointer;
+    list-style: none;
     font-family: "Bricolage Grotesque", system-ui, sans-serif;
     font-weight: 500;
     font-size: 1.5rem;
   }
-  li:last-child a.link { border-bottom: 1px solid var(--line); }
-  a.link small {
-    font-family: system-ui, sans-serif;
-    font-size: 0.9rem;
-    color: var(--muted);
+  .sections summary::-webkit-details-marker { display: none; }
+  .sections summary::after {
+    content: "";
+    flex: none;
+    width: 10px;
+    height: 10px;
+    border-right: 2px solid currentColor;
+    border-bottom: 2px solid currentColor;
+    transform: rotate(45deg) translate(-2px, -2px);
+    transition: transform 0.2s ease;
   }
-  a.link:hover, a.link:focus-visible { color: var(--accent); }
-  a.link:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .sections details[open] > summary::after {
+    transform: rotate(225deg) translate(-2px, -2px);
+  }
+  .sections summary:hover,
+  .sections summary:focus-visible { color: var(--accent); }
+  .sections summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  @media (prefers-reduced-motion: reduce) {
+    .sections summary::after { transition: none; }
+  }
+  .panel {
+    padding: 0 4px 24px;
+    color: var(--muted);
+    max-width: 52ch;
+  }
+  .panel p { margin: 0; }
 </style>
 </head>
 <body>
 <main>
   <h1>Carson Coop</h1>
-  <p class="bio">I make music, work with audio, and write code. Everything I'm working on lives at the links below.</p>
+  <p class="bio">I make music, work with audio, and write code. Everything I'm working on lives in the sections below.</p>
 
   <!-- Decorative waveform. Heights are percentages; edit freely. -->
   <div class="wave" aria-hidden="true" id="wave"></div>
 
-  <ul>
-    <!-- Replace each href with your real link, and edit the labels. -->
-    <li><a class="link" href="https://yourname.bandcamp.com"><span>Music</span><small>Bandcamp</small></a></li>
-    <li><a class="link" href="https://soundcloud.com/yourname"><span>Audio</span><small>SoundCloud</small></a></li>
-    <li><a class="link" href="https://github.com/yourusername"><span>Code</span><small>GitHub</small></a></li>
-    <li><a class="link" href="https://www.linkedin.com/in/yourname"><span>Work</span><small>LinkedIn</small></a></li>
-  </ul>
+  <div class="sections">
+    <!-- Replace the placeholder text in each panel with your real info and links. -->
+    <details>
+      <summary>Coding projects</summary>
+      <div class="panel">
+        <p>More info coming soon.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>Sound design</summary>
+      <div class="panel">
+        <p>More info coming soon.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>Music project</summary>
+      <div class="panel">
+        <p>More info coming soon.</p>
+      </div>
+    </details>
+  </div>
 </main>
 <script>
   // Builds the waveform bars (smooth pseudo-random shape).
