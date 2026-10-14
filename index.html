@@ -7,7 +7,7 @@
 <meta name="description" content="Carson Coop: UF Computer Science student working on audio programming, DSP, AI, sound design, and music.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;800&family=Silkscreen:wght@700&display=swap" rel="stylesheet">
 <style>
   :root {
     --bg: #f8f8fc;
@@ -186,6 +186,32 @@
     animation-delay: calc(var(--i) * 14ms);
   }
   @keyframes grow { from { transform: scaleY(0); } }
+  /* Minecraft-style splash text hint */
+  .wave-wrap { position: relative; }
+  .splash {
+    position: absolute;
+    right: clamp(4px, 3vw, 36px);
+    top: 0;
+    z-index: 2;
+    pointer-events: none;
+    white-space: nowrap;
+    font-family: "Silkscreen", ui-monospace, "Courier New", monospace;
+    font-weight: 700;
+    font-size: clamp(1rem, 2.4vw, 1.6rem);
+    line-height: 1;
+    color: #ffff00;
+    text-shadow: 2px 2px 0 #3f3f00;
+    transform: translateY(-60%) rotate(-20deg);
+    animation: splash-pulse 0.7s ease-in-out infinite alternate;
+    transition: opacity 0.4s ease;
+  }
+  .splash.gone { opacity: 0; animation: none; }
+  @keyframes splash-pulse {
+    from { transform: translateY(-60%) rotate(-20deg) scale(0.92); }
+    to   { transform: translateY(-60%) rotate(-20deg) scale(1.06); }
+  }
+  @media (prefers-reduced-motion: reduce) { .splash { animation: none; } }
+
   @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
     .wave span { animation: none; }
@@ -485,7 +511,10 @@
         </figure>
       </div>
       <!-- Interactive waveform: hover to swell, click or drag to play notes. -->
-      <div class="wave" aria-hidden="true" id="wave"></div>
+      <div class="wave-wrap">
+        <div class="wave" aria-hidden="true" id="wave"></div>
+        <div class="splash" id="splash" aria-hidden="true">Click me!</div>
+      </div>
     </div>
   </section>
 
@@ -667,7 +696,8 @@
         if (k >= 0 && k < n) kick[k] = Math.max(kick[k], 1 - Math.abs(j) * 0.25);
       }
     }
-    wave.addEventListener('pointerdown', function (e) { down = true; lastStep = -1; strum(posToIndex(e)); });
+    var splash = document.getElementById('splash');
+    wave.addEventListener('pointerdown', function (e) { if (splash) splash.classList.add('gone'); down = true; lastStep = -1; strum(posToIndex(e)); });
     wave.addEventListener('pointermove', function (e) {
       mouseX = posToIndex(e);
       if (down) strum(mouseX);
