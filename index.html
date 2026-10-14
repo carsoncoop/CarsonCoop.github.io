@@ -402,6 +402,48 @@
     .split .col:first-child { padding-right: 0; padding-bottom: 36px; }
     .split .col + .col { padding-left: 0; padding-top: 36px; border-left: 0; border-top: 1px solid var(--line); }
   }
+
+  /* Phones and small tablets */
+  html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+  h1, .block h2, .card-title { overflow-wrap: anywhere; }
+  .tags li { white-space: nowrap; }
+
+  @media (max-width: 640px) {
+    html { scroll-padding-top: 108px; }
+
+    /* Two-row sticky nav: profiles on top, sections below */
+    .nav .wrap {
+      flex-wrap: wrap;
+      height: auto;
+      padding-top: 8px;
+      padding-bottom: 8px;
+      gap: 2px 12px;
+    }
+    .nav nav { flex: 1 1 100%; min-width: 0; }
+    .nav .ext { order: -1; flex: 1 1 100%; }
+    .nav ul { gap: 18px; font-size: 0.9375rem; }
+    .nav a { display: inline-block; padding: 8px 0; }
+
+    .hero { padding-top: 40px; padding-bottom: 32px; }
+    h1 { font-size: clamp(2.5rem, 12.5vw, 3.25rem); }
+    .facts { font-size: 1rem; gap: 12px; }
+    .facts div { gap: 0; }
+    .headshot { width: 132px; }
+
+    /* Waveform: slightly taller and tighter bars so it is easy to tap and drag */
+    .wave { gap: 2px; height: 72px; }
+    .wave span { border-radius: 1.5px; }
+
+    .block { padding: 44px 0; }
+    .block h2 { font-size: clamp(2.25rem, 12vw, 3rem); margin-bottom: 24px; }
+
+    .card { border-radius: 16px; }
+    .card-head { flex-wrap: wrap; gap: 4px 16px; }
+    .card-title { font-size: 1.375rem; }
+    .video { border-radius: 10px; }
+
+    .track { border-radius: 16px; padding: 12px; }
+  }
 </style>
 </head>
 <body>
