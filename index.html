@@ -10,30 +10,40 @@
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;800&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #e9e8f2;
-    --surface: #f4f3fb;
-    --ink: #1c1b2e;
-    --muted: #55536b;
-    --accent: #3b3bf2;
-    --line: #c9c7e0;
-    --nav-bg: rgba(233, 232, 242, 0.82);
+    --bg: #f8f8fc;
+    --surface: #ffffff;
+    --ink: #14142b;
+    --muted: #5c5b78;
+    --accent: #4f46e5;
+    --accent-2: #a855f7;
+    --line: #e3e2f0;
+    --nav-bg: rgba(248, 248, 252, 0.8);
+    --glow-1: rgba(99, 102, 241, 0.2);
+    --glow-2: rgba(192, 132, 252, 0.16);
   }
   @media (prefers-color-scheme: dark) {
     :root {
-      --bg: #15142a;
-      --surface: #1d1b3a;
-      --ink: #ecebfa;
-      --muted: #a3a1c4;
-      --accent: #8c8cff;
-      --line: #2e2c52;
-      --nav-bg: rgba(21, 20, 42, 0.82);
+      --bg: #0c0b17;
+      --surface: #14132a;
+      --ink: #f1f0fb;
+      --muted: #9d9bbd;
+      --accent: #8b8bff;
+      --accent-2: #c084fc;
+      --line: #25233f;
+      --nav-bg: rgba(12, 11, 23, 0.8);
+      --glow-1: rgba(99, 102, 241, 0.3);
+      --glow-2: rgba(168, 85, 247, 0.2);
     }
   }
   * { box-sizing: border-box; }
   html { scroll-behavior: smooth; scroll-padding-top: 72px; }
   html, body { margin: 0; }
   body {
-    background: var(--bg);
+    background-color: var(--bg);
+    background-image:
+      radial-gradient(70% 55% at 12% 0%, var(--glow-1), transparent 70%),
+      radial-gradient(55% 45% at 92% 6%, var(--glow-2), transparent 70%);
+    background-repeat: no-repeat;
     color: var(--ink);
     font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
     line-height: 1.55;
@@ -141,7 +151,11 @@
     font-weight: 800;
     font-size: clamp(3rem, 8vw, 6rem);
     letter-spacing: -0.04em;
-    color: var(--line);
+    background: linear-gradient(135deg, var(--accent), var(--accent-2));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    opacity: 0.45;
   }
   .headshot img {
     position: absolute;
@@ -160,6 +174,7 @@
   .wave span {
     flex: 1;
     background: var(--accent);
+    background: color-mix(in srgb, var(--accent), var(--accent-2) calc(var(--t, 0) * 100%));
     border-radius: 2px;
     height: var(--h);
     transform-origin: center;
@@ -276,6 +291,54 @@
     border: 0;
   }
 
+  /* Thumbnail with a custom play button; the YouTube player loads on click */
+  .video-play {
+    position: absolute;
+    inset: 0;
+    display: block;
+    cursor: pointer;
+    background: var(--line);
+  }
+  .video-play img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.35s ease, filter 0.35s ease;
+    filter: brightness(0.82);
+  }
+  .video-play:hover img,
+  .video-play:focus-visible img { transform: scale(1.03); filter: brightness(0.95); }
+  .play-icon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: clamp(56px, 9vw, 84px);
+    aspect-ratio: 1;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.94);
+    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.3);
+    transition: transform 0.2s ease;
+  }
+  .play-icon::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 54%;
+    transform: translate(-50%, -50%);
+    border-style: solid;
+    border-width: clamp(10px, 1.7vw, 15px) 0 clamp(10px, 1.7vw, 15px) clamp(17px, 2.9vw, 26px);
+    border-color: transparent transparent transparent #1c1b2e;
+  }
+  .video-play:hover .play-icon,
+  .video-play:focus-visible .play-icon { transform: translate(-50%, -50%) scale(1.08); }
+  .video-play:focus-visible { outline: 3px solid var(--accent); outline-offset: -3px; }
+  @media (prefers-reduced-motion: reduce) {
+    .video-play img, .play-icon { transition: none; }
+    .video-play:hover img, .video-play:focus-visible img { transform: none; }
+  }
+
   /* Music */
   .intro {
     color: var(--muted);
@@ -390,9 +453,12 @@
           </div>
           <p class="desc">A real-time audio processing VST plugin for electronic music production. It keeps the dynamics of bass synths while adding richness through aggressive distortion, multiband compression, and envelope following. Built with C++ and the JUCE framework.</p>
           <ul class="tags" aria-label="Built with"><li>C++</li><li>JUCE</li><li>VST plugin</li></ul>
-          <div class="video">
-            <iframe src="https://www.youtube.com/embed/gI5iUk-rYCE" title="DynaFAT demo video" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-          </div>
+          <div class="video" data-yt="gI5iUk-rYCE" data-title="DynaFAT demo video">
+              <a class="video-play" href="https://youtu.be/gI5iUk-rYCE" aria-label="Play video: DynaFAT demo video">
+                <img src="https://i.ytimg.com/vi/gI5iUk-rYCE/maxresdefault.jpg" alt="" loading="lazy">
+                <span class="play-icon" aria-hidden="true"></span>
+              </a>
+            </div>
         </article>
 
         <article class="card">
@@ -402,9 +468,12 @@
           </div>
           <p class="desc">A real-time audio distortion plugin for electronic music production. It has four clipping algorithms (soft clip, hard clip, foldback, and downsample) for shaping your sound and adding harmonic character, plus drive, threshold, mix, and output controls and a live waveform display. Built with C++ and the JUCE framework.</p>
           <ul class="tags" aria-label="Built with"><li>C++</li><li>JUCE</li><li>Audio plugin</li></ul>
-          <div class="video">
-            <iframe src="https://www.youtube.com/embed/7pT0tFm85ME" title="EasyClip preview video" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-          </div>
+          <div class="video" data-yt="7pT0tFm85ME" data-title="EasyClip preview video">
+              <a class="video-play" href="https://youtu.be/7pT0tFm85ME" aria-label="Play video: EasyClip preview video">
+                <img src="https://i.ytimg.com/vi/7pT0tFm85ME/maxresdefault.jpg" alt="" loading="lazy">
+                <span class="play-icon" aria-hidden="true"></span>
+              </a>
+            </div>
         </article>
 
         <article class="card wide">
@@ -429,9 +498,12 @@
           </div>
           <p class="desc">Original gun sounds designed in Serum 2 and Ableton to replace Valorant's, edited into gameplay recordings in post.</p>
           <ul class="tags" aria-label="Type of work"><li>Sound design</li><li>Edited in post</li><li>Serum 2</li><li>Ableton</li></ul>
-          <div class="video">
-            <iframe src="https://www.youtube.com/embed/fOdENbnPvUg" title="Valorant gun sound redesign video" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-          </div>
+          <div class="video" data-yt="fOdENbnPvUg" data-title="Valorant gun sound redesign video">
+              <a class="video-play" href="https://youtu.be/fOdENbnPvUg" aria-label="Play video: Valorant gun sound redesign video">
+                <img src="https://i.ytimg.com/vi/fOdENbnPvUg/maxresdefault.jpg" alt="" loading="lazy">
+                <span class="play-icon" aria-hidden="true"></span>
+              </a>
+            </div>
         </article>
 
         <article class="card">
@@ -440,9 +512,12 @@
           </div>
           <p class="desc">Audio implemented in a game in real time.</p>
           <ul class="tags" aria-label="Type of work"><li>Sound design</li><li>Real-time implementation</li></ul>
-          <div class="video">
-            <iframe src="https://www.youtube.com/embed/DIQMVGZEFng" title="Real-time game audio demo video" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-          </div>
+          <div class="video" data-yt="DIQMVGZEFng" data-title="Real-time game audio demo video">
+              <a class="video-play" href="https://youtu.be/DIQMVGZEFng" aria-label="Play video: Real-time game audio demo video">
+                <img src="https://i.ytimg.com/vi/DIQMVGZEFng/maxresdefault.jpg" alt="" loading="lazy">
+                <span class="play-icon" aria-hidden="true"></span>
+              </a>
+            </div>
         </article>
       </div>
     </div>
@@ -457,17 +532,17 @@
         <div class="col">
           <h3>Original songs</h3>
           <div class="tracks">
-            <div class="track"><time class="date" datetime="2026-06-30">Jun 2026</time><iframe class="sc" title="Otherworld" loading="lazy" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/gorkaton/otherworld-1&color=%233b3bf2&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false&visual=false"></iframe></div>
-            <div class="track"><time class="date" datetime="2026-06-08">Jun 2026</time><iframe class="sc" title="Bass Don't Stop" loading="lazy" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/gorkaton/bass-dont-stop&color=%233b3bf2&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false&visual=false"></iframe></div>
-            <div class="track"><time class="date" datetime="2025-10-16">Oct 2025</time><iframe class="sc" title="2 The Back" loading="lazy" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/gorkaton/2-the-back&color=%233b3bf2&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false&visual=false"></iframe></div>
+            <div class="track"><time class="date" datetime="2026-06-30">Jun 2026</time><iframe class="sc" title="Otherworld" loading="lazy" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/gorkaton/otherworld-1&color=%234f46e5&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false&visual=false"></iframe></div>
+            <div class="track"><time class="date" datetime="2026-06-08">Jun 2026</time><iframe class="sc" title="Bass Don't Stop" loading="lazy" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/gorkaton/bass-dont-stop&color=%234f46e5&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false&visual=false"></iframe></div>
+            <div class="track"><time class="date" datetime="2025-10-16">Oct 2025</time><iframe class="sc" title="2 The Back" loading="lazy" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/gorkaton/2-the-back&color=%234f46e5&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false&visual=false"></iframe></div>
           </div>
         </div>
 
         <div class="col">
           <h3>Remixes</h3>
           <div class="tracks">
-            <div class="track"><time class="date" datetime="2026-05-03">May 2026</time><iframe class="sc" title="Ninajirachi - Battery Death (GORKATON remix)" loading="lazy" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/gorkaton/ninajirachi-battery-death&color=%233b3bf2&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false&visual=false"></iframe></div>
-            <div class="track"><time class="date" datetime="2026-04-29">Apr 2026</time><iframe class="sc" title="Earth, Wind &amp; Fire - Let's Groove (GORKATON remix)" loading="lazy" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/gorkaton/earth-wind-fire-lets-groove&color=%233b3bf2&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false&visual=false"></iframe></div>
+            <div class="track"><time class="date" datetime="2026-05-03">May 2026</time><iframe class="sc" title="Ninajirachi - Battery Death (GORKATON remix)" loading="lazy" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/gorkaton/ninajirachi-battery-death&color=%234f46e5&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false&visual=false"></iframe></div>
+            <div class="track"><time class="date" datetime="2026-04-29">Apr 2026</time><iframe class="sc" title="Earth, Wind &amp; Fire - Let's Groove (GORKATON remix)" loading="lazy" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/gorkaton/earth-wind-fire-lets-groove&color=%234f46e5&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false&visual=false"></iframe></div>
           </div>
         </div>
       </div>
@@ -483,6 +558,7 @@
     var h = 18 + 70 * Math.abs(Math.sin(i * 0.5) * Math.cos(i * 0.17 + 1)) + (i * 7 % 11);
     s.style.setProperty('--h', Math.min(100, h) + '%');
     s.style.setProperty('--i', i);
+    s.style.setProperty('--t', (i / (n - 1)).toFixed(3));
     wave.appendChild(s);
   }
 </script>
@@ -502,6 +578,36 @@
       });
     }, { threshold: 0.08, rootMargin: '0px 0px -4% 0px' });
     items.forEach(function (el) { el.classList.add('reveal'); io.observe(el); });
+  })();
+</script>
+
+<script>
+  // Video thumbnails: fall back to a smaller thumbnail if the HD one is missing,
+  // and swap in the real YouTube player when clicked.
+  (function () {
+    document.querySelectorAll('.video[data-yt]').forEach(function (box) {
+      var id = box.getAttribute('data-yt');
+      var link = box.querySelector('.video-play');
+      var img = box.querySelector('img');
+      function checkThumb() {
+        if (img.naturalWidth && img.naturalWidth <= 120) {
+          img.src = 'https://i.ytimg.com/vi/' + id + '/hqdefault.jpg';
+        }
+      }
+      if (img.complete) checkThumb(); else img.addEventListener('load', checkThumb, { once: true });
+      img.addEventListener('error', function () {
+        img.src = 'https://i.ytimg.com/vi/' + id + '/hqdefault.jpg';
+      }, { once: true });
+      link.addEventListener('click', function (e) {
+        e.preventDefault();
+        var f = document.createElement('iframe');
+        f.src = 'https://www.youtube.com/embed/' + id + '?autoplay=1&rel=0';
+        f.title = box.getAttribute('data-title') || 'Video';
+        f.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
+        f.allowFullscreen = true;
+        box.replaceChildren(f);
+      });
+    });
   })();
 </script>
 </body>
