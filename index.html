@@ -170,6 +170,10 @@
     align-items: center;
     gap: 3px;
     height: clamp(56px, 9vw, 96px);
+    cursor: pointer;
+    touch-action: pan-y;
+    user-select: none;
+    -webkit-user-select: none;
   }
   .wave span {
     flex: 1;
@@ -437,7 +441,7 @@
           <img src="headshot.jpg" alt="Portrait of Carson Coop" width="800" height="1000" onerror="this.remove()">
         </figure>
       </div>
-      <!-- Decorative waveform. Heights are percentages; edit freely. -->
+      <!-- Interactive waveform: hover to swell, click or drag to play notes. -->
       <div class="wave" aria-hidden="true" id="wave"></div>
     </div>
   </section>
@@ -550,17 +554,100 @@
   </section>
 </main>
 <script>
-  // Builds the waveform bars (smooth pseudo-random shape).
-  var wave = document.getElementById('wave');
-  var n = 64;
-  for (var i = 0; i < n; i++) {
-    var s = document.createElement('span');
-    var h = 18 + 70 * Math.abs(Math.sin(i * 0.5) * Math.cos(i * 0.17 + 1)) + (i * 7 % 11);
-    s.style.setProperty('--h', Math.min(100, h) + '%');
-    s.style.setProperty('--i', i);
-    s.style.setProperty('--t', (i / (n - 1)).toFixed(3));
-    wave.appendChild(s);
-  }
+  // Interactive waveform: idle ripple, hover swell, and a playable pentatonic synth.
+  (function () {
+    var wave = document.getElementById('wave');
+    var n = 64, bars = [], base = [], kick = [];
+    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    for (var i = 0; i < n; i++) {
+      var s = document.createElement('span');
+      var h = 18 + 70 * Math.abs(Math.sin(i * 0.5) * Math.cos(i * 0.17 + 1)) + (i * 7 % 11);
+      base[i] = Math.min(100, h);
+      kick[i] = 0;
+      s.style.setProperty('--h', base[i] + '%');
+      s.style.setProperty('--i', i);
+      s.style.setProperty('--t', (i / (n - 1)).toFixed(3));
+      wave.appendChild(s);
+      bars.push(s);
+    }
+
+    // ---- Audio ----
+    var ctx = null, master = null;
+    var scale = [0, 2, 4, 7, 9]; // major pentatonic
+    var notes = 28;
+    function noteIndex(i) { return Math.min(notes - 1, Math.floor(i / (n / notes))); }
+    function freq(step) {
+      var semis = Math.floor(step / 5) * 12 + scale[step % 5];
+      return 65.41 * Math.pow(2, semis / 12); // starts at C2
+    }
+    function pluck(f) {
+      if (!ctx) {
+        var AC = window.AudioContext || window.webkitAudioContext;
+        if (!AC) return;
+        ctx = new AC();
+        master = ctx.createGain();
+        master.gain.value = 0.22;
+        master.connect(ctx.destination);
+      }
+      if (ctx.state === 'suspended') ctx.resume();
+      var t = ctx.currentTime;
+      var lp = ctx.createBiquadFilter();
+      lp.type = 'lowpass';
+      lp.frequency.setValueAtTime(3200, t);
+      lp.frequency.exponentialRampToValueAtTime(350, t + 0.6);
+      var g = ctx.createGain();
+      g.gain.setValueAtTime(0.0001, t);
+      g.gain.exponentialRampToValueAtTime(0.7, t + 0.008);
+      g.gain.exponentialRampToValueAtTime(0.0001, t + 1.0);
+      lp.connect(g); g.connect(master);
+      [['sawtooth', -6], ['triangle', 7]].forEach(function (p) {
+        var o = ctx.createOscillator();
+        o.type = p[0]; o.frequency.value = f; o.detune.value = p[1];
+        o.connect(lp); o.start(t); o.stop(t + 1.1);
+      });
+    }
+
+    // ---- Interaction ----
+    var mouseX = -1, down = false, lastStep = -1;
+    function posToIndex(e) {
+      var r = wave.getBoundingClientRect();
+      return Math.max(0, Math.min(n - 1, (e.clientX - r.left) / r.width * n));
+    }
+    function strum(i) {
+      var step = noteIndex(Math.floor(i));
+      if (step === lastStep) return;
+      lastStep = step;
+      pluck(freq(step));
+      for (var j = -3; j <= 3; j++) {
+        var k = Math.floor(i) + j;
+        if (k >= 0 && k < n) kick[k] = Math.max(kick[k], 1 - Math.abs(j) * 0.25);
+      }
+    }
+    wave.addEventListener('pointerdown', function (e) { down = true; lastStep = -1; strum(posToIndex(e)); });
+    wave.addEventListener('pointermove', function (e) {
+      mouseX = posToIndex(e);
+      if (down) strum(mouseX);
+    });
+    wave.addEventListener('pointerleave', function () { mouseX = -1; });
+    window.addEventListener('pointerup', function () { down = false; lastStep = -1; });
+    window.addEventListener('pointercancel', function () { down = false; lastStep = -1; });
+
+    // ---- Animation loop ----
+    function frame(ts) {
+      var t = ts / 1000;
+      for (var i = 0; i < n; i++) {
+        var v = base[i];
+        if (!reduce) v += 8 * Math.sin(t * 1.6 + i * 0.35);
+        if (mouseX >= 0) { var d = i - mouseX; v += 28 * Math.exp(-d * d / 18); }
+        kick[i] *= 0.94;
+        v += kick[i] * 55;
+        bars[i].style.setProperty('--h', Math.max(6, Math.min(100, v)) + '%');
+      }
+      requestAnimationFrame(frame);
+    }
+    requestAnimationFrame(frame);
+  })();
 </script>
 <script>
   // Quick fade-in as sections scroll into view (skipped for reduced motion).
