@@ -308,14 +308,6 @@
     background: var(--line);
   }
 
-  /* Single wide card: text beside the video */
-  .feature {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1.5fr);
-    gap: clamp(20px, 3vw, 36px);
-    align-items: center;
-  }
-  .feature .tags { margin-bottom: 0; }
 
   /* Divider between Original songs and Remixes */
   .grid.split { gap: 0; }
@@ -340,7 +332,6 @@
     .grid { grid-template-columns: 1fr; }
     .hero-top { grid-template-columns: 1fr; }
     .headshot { order: -1; width: 144px; border-radius: 18px; }
-    .feature { grid-template-columns: 1fr; }
     .split .col:first-child { padding-right: 0; padding-bottom: 36px; }
     .split .col + .col { padding-left: 0; padding-top: 36px; border-left: 0; border-top: 1px solid var(--line); }
   }
@@ -431,27 +422,24 @@
   <section class="block" id="sound-design" aria-labelledby="sound-h">
     <div class="wrap">
       <h2 id="sound-h">Sound design</h2>
-      <!-- Valorant card is hidden for now. To bring it back, move it into the grid below (needs its YouTube ID).
+      <div class="grid">
         <article class="card">
           <div class="card-head">
             <h3 class="card-title">Valorant gun sound redesign</h3>
           </div>
-          <p class="desc">Gun sounds designed to replace Valorant's, edited into gameplay recordings in post.</p>
-          <ul class="tags" aria-label="Type of work"><li>Sound design</li><li>Edited in post</li></ul>
+          <p class="desc">Original gun sounds designed in Serum 2 and Ableton to replace Valorant's, edited into gameplay recordings in post.</p>
+          <ul class="tags" aria-label="Type of work"><li>Sound design</li><li>Edited in post</li><li>Serum 2</li><li>Ableton</li></ul>
           <div class="video">
-            <iframe src="https://www.youtube.com/embed/YOUR_VIDEO_ID_1" title="Valorant gun sound redesign video" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            <iframe src="https://www.youtube.com/embed/fOdENbnPvUg" title="Valorant gun sound redesign video" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
           </div>
         </article>
-      -->
-      <div class="grid">
-        <article class="card wide feature">
-          <div class="feature-text">
-            <div class="card-head">
-              <h3 class="card-title">Real-time game audio</h3>
-            </div>
-            <p class="desc">Original audio implemented in a game in real time.</p>
-            <ul class="tags" aria-label="Type of work"><li>Sound design</li><li>Real-time implementation</li></ul>
+
+        <article class="card">
+          <div class="card-head">
+            <h3 class="card-title">Real-time game audio</h3>
           </div>
+          <p class="desc">Audio implemented in a game in real time.</p>
+          <ul class="tags" aria-label="Type of work"><li>Sound design</li><li>Real-time implementation</li></ul>
           <div class="video">
             <iframe src="https://www.youtube.com/embed/DIQMVGZEFng" title="Real-time game audio demo video" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
           </div>
